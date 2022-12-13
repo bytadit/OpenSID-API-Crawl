@@ -18,18 +18,24 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use DB;
 
-class KecamatanController extends Controller
+class ApilistController extends Controller
 {
-    public function index(Request $request, Kecamatan $kecamatan)
+    public function index(Request $request, Apilist $apilist, $id, Desa $desa)
     {
-
-        $kecamatans=Kecamatan::all();
-        return view('dashboard.kecamatan.index', [
-            'kecamatans' => $kecamatans,
-            'kecamatan' =>$kecamatan,
-            'desas' => Desa::where('kecamatan_id', $kecamatan->id)->get(),
+        // $kecamatan=$desa->kecamatan_id;
+        // $total_data=$desas->count();
+        return view('dashboard.apilist.index', [
+            // 'apilists' => Apilist::where('desa_id', $id)->get(),
+            // 'kecamatan' => $desa->kecamatan_id,
+            // 'desas' => Desa::where('kecamatan_id', $id)->get(),
             'apilists' => Apilist::all(),
-            'title' => 'Daftar Kecamatan'
+            'id' => $id,
+            'desa' => $desa,
+            'bloodtypes' => Bloodtype::where('desa_id', $id)->get(),
+            'pemilihs' => Pemilih::where('desa_id', $id)->get(),
+            'sexes' => Sex::where('desa_id', $id)->get(),
+            'populations' => Population::where('desa_id', $id)->get(),
+            'title' => 'Desa'
         ]);
     }
 
@@ -102,15 +108,20 @@ class KecamatanController extends Controller
 
         // return redirect('/dashboard/btslists')->with('success', 'Data BTS Baru Berhasil Ditambahkan');
     }
-    public function show(Kecamatan $kecamatan)
+    public function show()
     {
-        return view('dashboard.kecamatan.show', [
-            'kecamatan' => $kecamatan,
-            'kecamatans' => Kecamatan::all(),
-            'title' => 'Desa',
-            // 'configs' => Config::all()->first(),
-            'desas' => Desa::where('kecamatan_id', $kecamatan->id)->get()
-        ]);
+        // return view('dashboard.desa.show', [
+        //     'apilists' => Apilist::all(),
+        //     'bloodtypes' => Bloodtype::where('desa_id', $id)->get(),
+        //     'pemilihs' => Pemilih::where('desa_id', $id)->get(),
+        //     'sexes' => Sex::where('desa_id', $id)->get(),
+        //     // 'kecamatan' => $desa->kecamatan_id,
+        //     'desas' => Desa::where('kecamatan_id', $id)->get(),
+        //     // 'apilists' => Apilist::all(),
+        //     'desa' => $desa,
+        //     'populations' => Population::where('desa_id', $id)->get(),
+        //     'title' => 'Apis'
+        // ]);
     }
 
     /**

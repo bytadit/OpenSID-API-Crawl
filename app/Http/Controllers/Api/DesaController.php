@@ -22,19 +22,18 @@ class DesaController extends Controller
 {
     public function index(Request $request, Desa $desa, $id)
     {
-
-        $desas=Desa::all();
-        $total_data=$desas->count();
+        $kecamatan=$desa->kecamatan_id;
+        // $total_data=$desas->count();
         return view('dashboard.desa.index', [
-            // 'desas' => Desa::all(),
-            'kecamatan' => $desa->kecamatan_id,
+            'desas' => Desa::where('kecamatan_id', $id)->get(),
+            // 'kecamatan' => $desa->kecamatan_id,
             // 'desas' => Desa::where('kecamatan_id', $id)->get(),
             'apilists' => Apilist::all(),
             'desa' => $desa,
-            'bloodtypes' => Bloodtype::where('desa_id', $id)->get(),
-            'pemilihs' => Pemilih::where('desa_id', $id)->get(),
-            'sexes' => Sex::where('desa_id', $id)->get(),
-            'populations' => Population::where('desa_id', $id)->get(),
+            'bloodtypes' => Bloodtype::where('desa_id', $desa->id)->get(),
+            'pemilihs' => Pemilih::where('desa_id', $desa->id)->get(),
+            'sexes' => Sex::where('desa_id', $desa->id)->get(),
+            'populations' => Population::where('desa_id', $desa->id)->get(),
             'title' => 'Desa'
         ]);
     }
@@ -115,8 +114,8 @@ class DesaController extends Controller
             'bloodtypes' => Bloodtype::where('desa_id', $id)->get(),
             'pemilihs' => Pemilih::where('desa_id', $id)->get(),
             'sexes' => Sex::where('desa_id', $id)->get(),
-            'kecamatan' => $desa->kecamatan_id,
-            // 'desas' => Desa::where('kecamatan_id', $id)->get(),
+            // 'kecamatan' => $desa->kecamatan_id,
+            'desas' => Desa::where('kecamatan_id', $id)->get(),
             // 'apilists' => Apilist::all(),
             'desa' => $desa,
             'populations' => Population::where('desa_id', $id)->get(),

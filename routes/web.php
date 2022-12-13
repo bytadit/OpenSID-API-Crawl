@@ -60,8 +60,12 @@ Route::post('/register', [RegisterController::class, 'store']); // nyimpen data
 Route::post('/logout', [LoginController::class, 'logout']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
-
 Route::resource('/dashboard/kecamatans', KecamatanController::class)->middleware('auth');
 // Route::get('/dashboard/kecamatans/{id}/desas', [KecamatanController::class, 'show'])->middleware('auth');
-Route::resource('/dashboard/kecamatans/{id}/desas', DesaController::class)->middleware('auth');
-Route::resource('/dashboard/kecamatans/{id}/desas/{id}/apilists', ApilistController::class)->middleware('auth');
+Route::resource('/dashboard/kecamatans/{kecamatan}/desas', DesaController::class)->middleware('auth');
+Route::resource('/dashboard/kecamatans/{kecamatan}/desas/{desa}/apilists', ApilistController::class)->middleware('auth');
+
+Route::resource('/dashboard/kecamatans/{kecamatan}/desas/{desa}/apilists/{apilist}/bloodtypes', BloodtypesController::class)->middleware('auth');
+Route::resource('/dashboard/kecamatans/{kecamatan}/desas/{desa}/apilists/{apilist}/pemilih', PemilihController::class)->middleware('auth');
+Route::resource('/dashboard/kecamatans/{kecamatan}/desas/{desa}/apilists/{apilist}/sex', SexController::class)->middleware('auth');
+Route::resource('/dashboard/kecamatans/{kecamatan}/desas/{desa}/apilists/{apilist}/populations', PopulationController::class)->middleware('auth');

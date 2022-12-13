@@ -2,19 +2,41 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Models\Kecamatan;
+use App\Models\Desa;
+use App\Models\Apilist;
+// use App\Models\Kecamatan;
+use App\Models\Bloodtype;
+use App\Models\Pemilih;
+use App\Models\Population;
+use App\Models\Sex;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
+use DB;
 
 class BloodtypesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request, Kecamatan $kecamatan, Desa $desa, $id)
     {
-        //
+        $kecamatan=$desa->kecamatan_id;
+        // $total_data=$desas->count();
+        return view('dashboard.apilist.bloodtype.index', [
+            // 'desas' => Desa::where('kecamatan_id', $id)->get(),
+            // 'kecamatan' => $desa->kecamatan_id,
+            // 'desas' => Desa::where('kecamatan_id', $id)->get(),
+            // 'apilists' => Apilist::all(),
+            'desa' => $desa,
+            'kecamatan' => $kecamatan,
+            'bloodtypes' => Bloodtype::where('desa_id', $desa->id)->get(),
+            // 'pemilihs' => Pemilih::where('desa_id', $desa->id)->get(),
+            // 'sexes' => Sex::where('desa_id', $desa->id)->get(),
+            // 'populations' => Population::where('desa_id', $desa->id)->get(),
+            'title' => 'Bloodtypes API'
+        ]);
     }
 
     /**

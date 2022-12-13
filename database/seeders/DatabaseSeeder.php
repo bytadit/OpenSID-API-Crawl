@@ -35,15 +35,5 @@ class DatabaseSeeder extends Seeder
                 'url_kecamatan' => strtolower($kecamatans[$i])
             ]);
         }
-        // Desa Seeder
-        // $desas = ['KERANDANGAN', 'LOCO', 'MANGSIT', 'SENGGIGI'];
-        // for ($i = 0; $i < sizeof($desas); $i++){
-        //     Desa::create([
-        //         'nama' => $desas[$i],
-        //         'kecamatan_id' => rand(1,3),
-        //         'url_desa' => strtolower($desas[$i])
-        //     ]);
-        // }
-
     }
 }

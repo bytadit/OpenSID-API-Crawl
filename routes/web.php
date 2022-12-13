@@ -19,53 +19,16 @@ use App\Http\Controllers\Api\RegisterController;
 Route::get('/', function () {
     return view('welcome');
 });
-
-// Route::prefix('bloodtypes')->group(function () {
-//     Route::get('apiwithoutkey', [ProjectController::class, 'apiWithoutKey'])->name('apiWithoutKey');
-//     Route::get('apiwithkey', [ProjectController::class, 'apiWithKey'])->name('apiWithKey');
-//     Route::get('createpagination', [ProjectController::class, 'createPagination'])->name('createPagination');
-// });
-
-
-// // Route::resource('projects', ProjectController::class);
-// Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
-// Route::post('/register', [RegisterController::class, 'store']); // nyimpen data
-
-// Route::get('/login', [LoginController::class, 'index'])->name('login');
-// // Route::post('/login', [LoginController::class, 'authenticate']);
-// Route::post('/login', [LoginController::class, 'store']);
-// Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
-// // Route::get('/home', function () {
-// //     return view('home.index', [
-// //         'title' => 'Home'
-// //     ]);
-// //     })->name('home');
-// Route::get('/home', [HomeController::class, 'index'])->name('home');
-// Route::get('/bloodtypes', [BloodTypesController::class, 'index'])->name('bloodtypes');
-// Route::get('/populations', [PopulationsController::class, 'index'])->name('populations');
-// Route::get('/pemilih', [PemilihController::class, 'index'])->name('pemilih');
-// Route::get('/sex', [SexController::class, 'index'])->name('sex');
-
-
-
-
-
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
-
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']); // nyimpen data
-
 Route::post('/logout', [LoginController::class, 'logout']);
-
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 Route::get('/dashboard/kecamatans', [KecamatanController::class, 'index'])->middleware('auth');
-// Route::get('/dashboard/kecamatans/{id}/desas', [KecamatanController::class, 'show'])->middleware('auth');
 Route::get('/dashboard/kecamatans/{kecamatan:url_kecamatan}/desas', [DesaController::class, 'index'])->middleware('auth');
 Route::get('/dashboard/kecamatans/{kecamatan:url_kecamatan}/desas/{desa:url_desa}/apilists', [ApilistController::class, 'index'])->middleware('auth');
-
-Route::resource('/dashboard/kecamatans/{kecamatan:url_kecamatan}/desas/{desa:url_desa}/apilists/bloodtypes', BloodtypesController::class)->middleware('auth');
-Route::resource('/dashboard/kecamatans/{kecamatan:url_kecamatan}/desas/{desa:url_desa}/apilists/pemilih', PemilihController::class)->middleware('auth');
-Route::resource('/dashboard/kecamatans/{kecamatan:url_kecamatan}/desas/{desa:url_desa}/apilists/sex', SexController::class)->middleware('auth');
-Route::resource('/dashboard/kecamatans/{kecamatan:url_kecamatan}/desas/{desa:url_desa}/apilists/populations', PopulationController::class)->middleware('auth');
+Route::get('/dashboard/kecamatans/{kecamatan:url_kecamatan}/desas/{desa:url_desa}/apilists/bloodtypes', [BloodtypesController::class, 'index'])->middleware('auth');
+Route::get('/dashboard/kecamatans/{kecamatan:url_kecamatan}/desas/{desa:url_desa}/apilists/pemilih', [PemilihController::class, 'index'])->middleware('auth');
+Route::get('/dashboard/kecamatans/{kecamatan:url_kecamatan}/desas/{desa:url_desa}/apilists/sex', [SexController::class, 'index'])->middleware('auth');
+Route::get('/dashboard/kecamatans/{kecamatan:url_kecamatan}/desas/{desa:url_desa}/apilists/populations', [PopulationController::class, 'index'])->middleware('auth');

@@ -9,7 +9,11 @@ class Kecamatan extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    public function desa(){
+    public function desas(){
         return $this->hasMany(Desa::class);
     }
+    // public function getRouteKeyName()
+    // {
+    //     return 'nama';
+    // }
 }

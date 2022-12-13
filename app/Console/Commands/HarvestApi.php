@@ -38,7 +38,7 @@ class HarvestApi extends Command
     {
         $client = new \GuzzleHttp\Client();
         // $token = Session::get('token');
-        $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjcwOTE3NzI1LCJleHAiOjE2NzA5MjEzMjUsIm5iZiI6MTY3MDkxNzcyNSwianRpIjoiVktqOU9jbTVPSGowaW9GdiIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.WY73f4lhEchpBxHkVwUdNI-kHGH8y48tib81uDYEFPs';
+        $token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2xvZ2luIiwiaWF0IjoxNjcwOTQ2OTU0LCJleHAiOjE2NzA5NTA1NTQsIm5iZiI6MTY3MDk0Njk1NCwianRpIjoibjc1ZTcyd25qekEzemgzUSIsInN1YiI6IjEiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.AYwfJlvfoe8Lce17oP-k85ml3Uarr3XoRVyAQUyMw58';
         // Pemilih
         $url = "http://127.0.0.1:8000/api/pemilih";
         $response = $client->get($url, [
@@ -162,7 +162,8 @@ class HarvestApi extends Command
                     'id' => $datum['id'],
                     'nama' => $datum['name'],
                     'kecamatan_id' => $datum['kecamatan_id'],
-                    'url_desa' => strtolower($datum['name']),
+                    'url_desa' => str_replace([' ', '.'], '-', strtolower($datum['name']))
+
                  ]
              );
          };

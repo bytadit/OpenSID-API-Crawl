@@ -16,7 +16,7 @@
                     <h3 class="text-white">{{ $desa->nama }}</h3>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="/dashboard/kecamatans/{{ $desa->kecamatan_id }}/desas/{{ $desa->id }}/apilists">View APIs</a>
+                    <a class="small text-white stretched-link" href="/dashboard/kecamatans/{{ $kecamatan->url_kecamatan }}/desas/{{ $desa->url_desa }}/apilists">View Details</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>

@@ -20,7 +20,7 @@ use DB;
 
 class KecamatanController extends Controller
 {
-    public function index(Request $request, Kecamatan $kecamatan)
+    public function index(Request $request, Kecamatan $kecamatan, Desa $desa)
     {
 
         $kecamatans=Kecamatan::all();

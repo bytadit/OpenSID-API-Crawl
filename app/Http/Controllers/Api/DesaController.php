@@ -20,15 +20,17 @@ use DB;
 
 class DesaController extends Controller
 {
-    public function index(Request $request, Desa $desa, $id)
+    public function index(Request $request, Apilist $apilist, Desa $desa, Kecamatan $kecamatan)
     {
-        $kecamatan=$desa->kecamatan_id;
+        // $kecamatan=$desa->kecamatan_id;
         // $total_data=$desas->count();
         return view('dashboard.desa.index', [
-            'desas' => Desa::where('kecamatan_id', $id)->get(),
+            'desas' => Desa::where('kecamatan_id', $kecamatan->id)->get(),
             // 'kecamatan' => $desa->kecamatan_id,
             // 'desas' => Desa::where('kecamatan_id', $id)->get(),
             'apilists' => Apilist::all(),
+            'kecamatan' => $kecamatan,
+            'apilist' => $apilist,
             'desa' => $desa,
             'bloodtypes' => Bloodtype::where('desa_id', $desa->id)->get(),
             'pemilihs' => Pemilih::where('desa_id', $desa->id)->get(),

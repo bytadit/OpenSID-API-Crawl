@@ -31,7 +31,8 @@ class DatabaseSeeder extends Seeder
         $kecamatans = ['Laweyan', 'Banjarsari', 'Gumpang', 'Gentan'];
         for ($i = 0; $i < sizeof($kecamatans); $i++){
             Kecamatan::create([
-                'nama' => $kecamatans[$i]
+                'nama' => $kecamatans[$i],
+                'url_kecamatan' => strtolower($kecamatans[$i])
             ]);
         }
         // Desa Seeder

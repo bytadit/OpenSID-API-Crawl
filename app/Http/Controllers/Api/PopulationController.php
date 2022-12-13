@@ -20,7 +20,7 @@ use DB;
 
 class PopulationController extends Controller
 {
-    public function index(Request $request, Kecamatan $kecamatan, Desa $desa, $id)
+    public function index(Request $request, Kecamatan $kecamatan, Desa $desa)
     {
         $kecamatan=$desa->kecamatan_id;
         // $total_data=$desas->count();

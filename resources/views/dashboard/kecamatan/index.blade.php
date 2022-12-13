@@ -15,7 +15,7 @@
                     <h3 class="text-white">Kecamatan {{ $kecamatan->nama }}</h3>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="/dashboard/kecamatans/{{ $kecamatan->id }}/desas">View Details</a>
+                    <a class="small text-white stretched-link" href="/dashboard/kecamatans/{{ $kecamatan->url_kecamatan }}/desas">View Details</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>

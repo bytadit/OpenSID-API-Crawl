@@ -12,11 +12,11 @@
             @foreach ($apilists as $apilist)
             <div class="card bg-primary text-white mb-4">
                 <div class="card-body">
-                    <div>Desa {{ $apilist->id }}</div>
+                    <div>API {{ $apilist->id }}</div>
                     <h3 class="text-white">{{ strtoupper($apilist->path_api) }}</h3>
                 </div>
                 <div class="card-footer d-flex align-items-center justify-content-between">
-                    <a class="small text-white stretched-link" href="/dashboard/kecamatans/{{ $id }}/desas/{{ $desa->id }}/apilists/{{ $apilist->id }}/{{ $apilist->path_api }}">View APIs</a>
+                    <a class="small text-white stretched-link" href="/dashboard/kecamatans/{{ $kecamatan->url_kecamatan }}/desas/{{ $desa->url_desa }}/apilists/{{ $apilist->path_api }}">View APIs</a>
                     <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                 </div>
             </div>

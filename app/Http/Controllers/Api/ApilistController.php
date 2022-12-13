@@ -20,21 +20,23 @@ use DB;
 
 class ApilistController extends Controller
 {
-    public function index(Request $request, Apilist $apilist, $id, Desa $desa)
+    public function index(Request $request, Apilist $apilist, Kecamatan $kecamatan, Desa $desa)
     {
         // $kecamatan=$desa->kecamatan_id;
         // $total_data=$desas->count();
         return view('dashboard.apilist.index', [
             // 'apilists' => Apilist::where('desa_id', $id)->get(),
             // 'kecamatan' => $desa->kecamatan_id,
-            // 'desas' => Desa::where('kecamatan_id', $id)->get(),
+            'desas' => Desa::where('kecamatan_id', $kecamatan->id)->get(),
             'apilists' => Apilist::all(),
-            'id' => $id,
+            // 'id' => $id,
             'desa' => $desa,
-            'bloodtypes' => Bloodtype::where('desa_id', $id)->get(),
-            'pemilihs' => Pemilih::where('desa_id', $id)->get(),
-            'sexes' => Sex::where('desa_id', $id)->get(),
-            'populations' => Population::where('desa_id', $id)->get(),
+            'kecamatan' => $kecamatan,
+            'apilist' => $apilist,
+            'bloodtypes' => Bloodtype::where('desa_id', $desa->id)->get(),
+            'pemilihs' => Pemilih::where('desa_id', $desa->id)->get(),
+            'sexes' => Sex::where('desa_id', $desa->id)->get(),
+            'populations' => Population::where('desa_id', $desa->id)->get(),
             'title' => 'Desa'
         ]);
     }

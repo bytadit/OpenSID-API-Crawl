@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('sexes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('desa_id');
+            $table->string('jenis_kelamin_id');
             $table->string('jenis_kelamin');
             $table->integer('total');
             $table->timestamps();

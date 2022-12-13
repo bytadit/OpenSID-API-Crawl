@@ -27,22 +27,41 @@ Route::get('/', function () {
 // });
 
 
-// Route::resource('projects', ProjectController::class);
+// // Route::resource('projects', ProjectController::class);
+// Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
+// Route::post('/register', [RegisterController::class, 'store']); // nyimpen data
+
+// Route::get('/login', [LoginController::class, 'index'])->name('login');
+// // Route::post('/login', [LoginController::class, 'authenticate']);
+// Route::post('/login', [LoginController::class, 'store']);
+// Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// // Route::get('/home', function () {
+// //     return view('home.index', [
+// //         'title' => 'Home'
+// //     ]);
+// //     })->name('home');
+// Route::get('/home', [HomeController::class, 'index'])->name('home');
+// Route::get('/bloodtypes', [BloodTypesController::class, 'index'])->name('bloodtypes');
+// Route::get('/populations', [PopulationsController::class, 'index'])->name('populations');
+// Route::get('/pemilih', [PemilihController::class, 'index'])->name('pemilih');
+// Route::get('/sex', [SexController::class, 'index'])->name('sex');
+
+
+
+
+
+Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
+Route::post('/login', [LoginController::class, 'authenticate']);
+
 Route::get('/register', [RegisterController::class, 'index'])->middleware('guest');
 Route::post('/register', [RegisterController::class, 'store']); // nyimpen data
 
-Route::get('/login', [LoginController::class, 'index'])->name('login');
-// Route::post('/login', [LoginController::class, 'authenticate']);
-Route::post('/login', [LoginController::class, 'store']);
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::post('/logout', [LoginController::class, 'logout']);
 
-// Route::get('/home', function () {
-//     return view('home.index', [
-//         'title' => 'Home'
-//     ]);
-//     })->name('home');
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/bloodtypes', [BloodTypesController::class, 'index'])->name('bloodtypes');
-Route::get('/populations', [PopulationsController::class, 'index'])->name('populations');
-Route::get('/pemilih', [PemilihController::class, 'index'])->name('pemilih');
-Route::get('/sex', [SexController::class, 'index'])->name('sex');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+
+Route::resource('/dashboard/kecamatans', KecamatanController::class)->middleware('auth');
+// Route::get('/dashboard/kecamatans/{id}/desas', [KecamatanController::class, 'show'])->middleware('auth');
+Route::resource('/dashboard/kecamatans/{id}/desas', DesaController::class)->middleware('auth');
+Route::resource('/dashboard/kecamatans/{id}/desas/{id}/apilists', ApilistController::class)->middleware('auth');

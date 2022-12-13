@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class SexController extends Controller
+class PopulationController extends Controller
 {
     /**
      * Display a listing of the resource.

@@ -10,10 +10,11 @@
                 </ol>
             </div>
             <div class="col-lg-2">
-                <form action="/logout" method="post">
+                <form action="/logout" method="post" class="form-inline m-0 p-0">
                     @csrf
-                    <button type="submit" class="btn btn-danger">Log Out</button>
+                    <button type="submit" class="btn btn-danger inline m-1">Log Out</button>
                 </form>
+                <a class="btn btn-primary inline m-1 {{ $display }}"href="/harvest-apis">Harvest Apis</a>
             </div>
         </div>
         <div class="row">

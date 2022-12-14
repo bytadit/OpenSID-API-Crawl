@@ -7,7 +7,7 @@
                 <h1 class="h3 mb-3 fw-normal text-center">Registration <span>Form</span></h1>
                 <form action="/register" method="post">
                     @csrf
-                    <div class="form-floating">
+                    {{-- <div class="form-floating">
                         <input type="text" class="form-control @error('username') is-invalid @enderror" id="username"
                             name="username" placeholder="username" required value={{ old('username') }}>
                         <label for="username">Username</label>
@@ -16,8 +16,8 @@
                                 {{ $message }}
                             </div>
                         @enderror
-                    </div>
-                    <div class="form-floating mt-2">
+                    </div> --}}
+                    {{-- <div class="form-floating mt-2">
                         <input type="text" class="form-control rounded-top @error('firstName') is-invalid @enderror"
                             id="firstName" name="firstName" placeholder="Nama Depan" required value={{ old('firstName') }}>
                         <label for="firstName">Nama Depan</label>
@@ -26,8 +26,8 @@
                                 {{ $message }}
                             </div>
                         @enderror
-                    </div>
-                    <div class="form-floating mt-2">
+                    </div> --}}
+                    {{-- <div class="form-floating mt-2">
                         <input type="text" class="form-control rounded-top @error('lastName') is-invalid @enderror"
                             id="lastName" name="lastName" placeholder="Nama Belakang" required value={{ old('lastName') }}>
                         <label for="lastName">Nama Belakang</label>
@@ -36,7 +36,19 @@
                                 {{ $message }}
                             </div>
                         @enderror
+                    </div> --}}
+
+                    <div class="form-floating mt-2">
+                        <input type="text" class="form-control rounded-top @error('name') is-invalid @enderror"
+                            id="name" name="name" placeholder="Nama" required value={{ old('name') }}>
+                        <label for="name">Nama</label>
+                        @error('name')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                        @enderror
                     </div>
+
                     <div class="form-floating mt-2">
                         <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
                             name="email" placeholder="Email" required value={{ old('email') }}>

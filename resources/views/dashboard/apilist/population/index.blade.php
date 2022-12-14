@@ -39,6 +39,20 @@
                 @endforeach
             </tbody>
         </table>
+    </div>
 
+    <div class="col-md-12">
+        <h1 class="text-center">Population Graph</h1>
+        <div class="col-xl-6" style="margin-top: 30px;">
+            <div class="card m-5">
+                <div class="card-body">
+                    <div class="chart-container">
+                        {!! $chart->container() !!}
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js" charset="utf-8"></script>
+                        {!! $chart->script() !!}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

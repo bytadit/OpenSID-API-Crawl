@@ -22,7 +22,7 @@
     </div>
 </nav>
 <div class="rounded-md mt-4 mx-auto max-w-5xl flex gap-8 items-center">
-    <a class="{{ $display}} w-auto rounded-md border border-transparent bg-emerald-600 py-2 px-4 text-sm font-medium text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 {{ $display }}" href="/harvest-apis">
+    <a class="w-auto rounded-md border border-transparent bg-emerald-600 py-2 px-4 text-sm font-medium text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 btn btn-success {{ $display }}" href="/harvest-apis">
         Ambil Data
     </a>
 </div>

@@ -14,14 +14,14 @@ class SexController extends Controller
     {
         $sexes = Sex::where('desa_id', $desa->id)->get();
         $labels = collect(['Pria', 'Wanita']);
-        $data_pria = $sexes->flatten(1)->pluck('');
-        $data_wanita = $sexes->flatten(1)->pluck('');
+        $data_Pria = $sexes->where('jenis_kelamin', '=', 'Pria')->flatten(1)->pluck('total');
+        $data_Wanita = $sexes->where('jenis_kelamin', '=', 'Wanita')->flatten(1)->pluck('total');
         $colors = $labels->map(function ($item) {
             return $rand_color = '#' . substr(md5(mt_rand()), 0, 6);
         });
         $chart = new ApiChart;
         $chart->labels($labels);
-        $chart->dataset('Sex', 'pie', [$data_pria, $data_wanita])->backgroundColor($colors);
+        $chart->dataset('Sex', 'pie', [$data_Pria, $data_Wanita])->backgroundColor($colors);
         return view('dashboard.apilist.sex.index', [
             'sexes' => Sex::where('desa_id', $desa->id)->get(),
             'desa' => $desa,

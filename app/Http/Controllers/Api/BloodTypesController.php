@@ -13,15 +13,17 @@ class BloodtypesController extends Controller
     public function index(Kecamatan $kecamatan, Desa $desa)
     {
         $bloodtypes = Bloodtype::where('desa_id', $desa->id)->get();
-        $labels = collect(['Pria', 'Wanita']);
-        $data_pria = $bloodtypes->flatten(1)->pluck('Pria');
-        $data_wanita = $bloodtypes->flatten(1)->pluck('Wanita');
+        $labels = collect(['A', 'AB', 'B', 'O']);
+        $data_A = $bloodtypes->where('bloodtype_name', '=', 'A')->flatten(1)->pluck('Total');
+        $data_AB = $bloodtypes->where('bloodtype_name', '=', 'AB')->flatten(1)->pluck('Total');
+        $data_B = $bloodtypes->where('bloodtype_name', '=', 'B')->flatten(1)->pluck('Total');
+        $data_O = $bloodtypes->where('bloodtype_name', '=', 'O')->flatten(1)->pluck('Total');
         $colors = $labels->map(function ($item) {
             return $rand_color = '#' . substr(md5(mt_rand()), 0, 6);
         });
         $chart = new ApiChart;
         $chart->labels($labels);
-        $chart->dataset('Bloodtype', 'pie', [$data_pria, $data_wanita])->backgroundColor($colors);
+        $chart->dataset('Bloodtype', 'pie', [$data_A, $data_AB, $data_B, $data_O])->backgroundColor($colors);
         return view('dashboard.apilist.bloodtype.index', [
             'bloodtypes' => Bloodtype::where('desa_id', $desa->id)->get(),
             'kecamatan' => $kecamatan,

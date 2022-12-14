@@ -33,7 +33,7 @@
             </p>
         </div>
         <form class="mt-8 space-y-6" action="/login" method="POST">
-            <input type="hidden" name="remember" value="true">
+            {{-- <input type="hidden" name="remember" value="true"> --}}
             @csrf
             <div class="-space-y-px rounded-md shadow-sm">
                 <div>
@@ -47,10 +47,10 @@
             </div>
 
             <div class="flex items-center justify-between">
-                <div class="flex items-center">
+                {{-- <div class="flex items-center">
                     <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
                     <label for="remember-me" class="ml-2 block text-sm text-gray-900">Ingat saya</label>
-                </div>
+                </div> --}}
 
                 <div class="text-sm flex gap-1">
                     <p>Belum punya akun?</p>

@@ -1,84 +1,66 @@
 @extends('layouts.main')
 
 @section('container')
-    <div class="row justify-content-center">
-        <div class="col-lg-5 card_register p-4">
-            <main class="form-registration w-100 m-auto">
-                <h1 class="h3 mb-3 fw-normal text-center">Registration <span>Form</span></h1>
-                <form action="/register" method="post">
-                    @csrf
-                    {{-- <div class="form-floating">
-                        <input type="text" class="form-control @error('username') is-invalid @enderror" id="username"
-                            name="username" placeholder="username" required value={{ old('username') }}>
-                        <label for="username">Username</label>
-                        @error('username')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div> --}}
-                    {{-- <div class="form-floating mt-2">
-                        <input type="text" class="form-control rounded-top @error('firstName') is-invalid @enderror"
-                            id="firstName" name="firstName" placeholder="Nama Depan" required value={{ old('firstName') }}>
-                        <label for="firstName">Nama Depan</label>
-                        @error('firstName')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div> --}}
-                    {{-- <div class="form-floating mt-2">
-                        <input type="text" class="form-control rounded-top @error('lastName') is-invalid @enderror"
-                            id="lastName" name="lastName" placeholder="Nama Belakang" required value={{ old('lastName') }}>
-                        <label for="lastName">Nama Belakang</label>
-                        @error('lastName')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div> --}}
 
-                    <div class="form-floating mt-2">
-                        <input type="text" class="form-control rounded-top @error('name') is-invalid @enderror"
-                            id="name" name="name" placeholder="Nama" required value={{ old('name') }}>
-                        <label for="name">Nama</label>
-                        @error('name')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-
-                    <div class="form-floating mt-2">
-                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                            name="email" placeholder="Email" required value={{ old('email') }}>
-                        <label for="email">Email</label>
-                        @error('email')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="form-floating mb-4 mt-2">
-                        <input type="password" class="form-control rounded-bottom @error('password') is-invalid @enderror"
-                            id="password" name="password" placeholder="Password" required value={{ old('password') }}>
-                        <label for="password">Password</label>
-                        @error('password')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
-                        @enderror
-                    </div>
-                    <div class="form-floating mb-4 mt-2">
-                        <input type="password" class="form-control rounded-bottom @error('password') is-invalid @enderror"
-                            id="password" name="password_confirmation" placeholder="Password" required
-                            autocomplete="current-password">
-                        <label for="password">Confirm Password</label>
-                    </div>
-                    <button class="w-100 btn btn-lg btn-success" type="submit">Register</button>
-                    <small class="d-block text-center my-3">Already Registered? <a href="/login">Login</a></small>
-                </form>
-            </main>
+<section class="mx-auto mt-6 rounded-xl max-w-sm bg-slate-50 shadow-md border-t-4 border-indigo-600">
+    <div class="p-10">
+        <div class="flex justify-center items-center">
+            <img class="w-auto h-16" src="{{ URL::asset('images/opensid_logo.png') }}">
+            <div class="ml-2">
+                <h1 class="font-semibold text-base">OpenSID</h1>
+                <h2 class="text-sm">Desa Digital Terbuka</h2>
+            </div>
         </div>
+
+        <form class="space-y-6" action="/register" method="POST">
+            @csrf
+            <div>
+                <label for="name" class="text-slate-700 text-sm @error('username') is-invalid @enderror">Nama Lengkap</label>
+                <input id="name" name="name" type="text" required value="{{ old('name') }}" required class="relative block w-full appearance-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                @error('username')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
+            <div class="mt-2">
+                <label for="email" class="text-slate-700 text-sm @error('email') is-invalid @enderror">Email</label>
+                <input id="email" name="email" type="email" required value="{{ old('email') }}" required class="relative block w-full appearance-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                @error('email')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
+            <div class="mt-2">
+                <label for="password" class="text-slate-700 text-sm @error('password') is-invalid @enderror">Kata Sandi</label>
+                <input id="password" name="password" type="password" required class="relative block w-full appearance-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+                @error('password')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
+            <div class="mt-2">
+                <label for="password" class="text-slate-700 text-sm @error('password') is-invalid @enderror">Konfirmasi Kata Sandi</label>
+                <input id="password" name="password_confirmation" type="password" required class="relative block w-full appearance-none rounded border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
+            </div>
+
+            <div>
+                <button type="submit" class="group w-full rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                    Buat Akun
+                </button>
+            </div>
+
+            <div class="flex items-center justify-center">
+                <div class="text-sm flex gap-1">
+                    <p>Sudah punya akun?</p>
+                    <a href="/login" class="font-medium text-indigo-600 hover:text-indigo-500">Masuk</a>
+                </div>
+            </div>
+        </form>
     </div>
+</section>
+
+
 @endsection

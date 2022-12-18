@@ -14,8 +14,8 @@ class PemilihController extends Controller
     {
         $pemilihs = Pemilih::where('desa_id', $desa->id)->get();
         $labels = collect(['Pria', 'Wanita']);
-        $data_pria = $pemilihs->flatten(1)->pluck('Lk');
-        $data_wanita = $pemilihs->flatten(1)->pluck('Pr');
+        $data_pria = $pemilihs->flatten(1)->pluck('Lk')->sum();
+        $data_wanita = $pemilihs->flatten(1)->pluck('Pr')->sum();
         $colors = $labels->map(function ($item) {
             return $rand_color = '#' . substr(md5(mt_rand()), 0, 6);
         });

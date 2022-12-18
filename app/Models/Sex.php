@@ -13,4 +13,5 @@ class Sex extends Model
     {
         return $this->belongsTo(Desa::class);
     }
+    public $timestamps = false;
 }

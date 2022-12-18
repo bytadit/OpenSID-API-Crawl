@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('apilists', function (Blueprint $table) {
             $table->id();
+            $table->string('nama');
             $table->string('path_api');
             $table->timestamps();
         });

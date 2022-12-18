@@ -28,17 +28,6 @@ class RegisterController extends Controller
 
         $validatedData['password'] = Hash::make($validatedData['password']);
         User::create($validatedData);
-
-        $client = new Client();
-        $url = "http://127.0.0.1:8000/api/register";
-            $client->post($url, [
-                'form_params' => [
-                    'name' => $request->get('name'),
-                    'email' => $request->get('email'),
-                    'password' => $request->get('password'),
-                    'password_confirmation' => $request->get('password_confirmation'),
-                ]
-            ]);
         return redirect('/login')->with('success', 'Registration Successfull!! Please Login');
     }
 }

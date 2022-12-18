@@ -14,8 +14,8 @@ class SexController extends Controller
     {
         $sexes = Sex::where('desa_id', $desa->id)->get();
         $labels = collect(['Pria', 'Wanita']);
-        $data_Pria = $sexes->where('jenis_kelamin', '=', 'Pria')->flatten(1)->pluck('total');
-        $data_Wanita = $sexes->where('jenis_kelamin', '=', 'Wanita')->flatten(1)->pluck('total');
+        $data_Pria = $sexes->where('jenis_kelamin', '=', 'Pria')->flatten(1)->pluck('total')->sum();
+        $data_Wanita = $sexes->where('jenis_kelamin', '=', 'Wanita')->flatten(1)->pluck('total')->sum();
         $colors = $labels->map(function ($item) {
             return $rand_color = '#' . substr(md5(mt_rand()), 0, 6);
         });

@@ -13,4 +13,5 @@ class Pemilih extends Model
     {
         return $this->belongsTo(Desa::class);
     }
+    public $timestamps = false;
 }

@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\Bloodtype;
 use App\Models\Sex;
+use App\Models\Apilist;
 use App\Models\Desa;
 use App\Models\Population;
 use App\Models\Pemilih;
@@ -12,6 +13,8 @@ use Illuminate\Support\Facades\Http;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Carbon;
+
 
 class HarvestApi extends Command
 {
@@ -20,7 +23,7 @@ class HarvestApi extends Command
      *
      * @var string
      */
-    protected $signature = 'harvest:apis {token}';
+    protected $signature = 'harvest:apis';
 
     /**
      * The console command description.
@@ -34,158 +37,157 @@ class HarvestApi extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(Request $request)
     {
-        $client = new \GuzzleHttp\Client();
-        $token = $this->argument('token');
+        $desas = Desa::all();
+        $apilists = Apilist::all();
+
+        $defaultIndex = 'Belum';
+        $akun = $this->choice(
+            'Apakah sudah punya akun?',
+            ['Sudah', 'Belum'],
+            $defaultIndex
+        );
+
+        if ($akun == $defaultIndex) {
+            $this->info('Form Registrasi');
+            $name = $this->ask('Nama');
+            $email = $this->ask('Email');
+            $password = $this->secret('Password');
+            $password_confirm = $this->secret('Konfirmasi Password');
+            while ($password_confirm != $password) {
+                $this->error('Konfirmasi Password tidak cocok!');
+                $password_confirm = $this->secret('Konfirmasi Password');
+            }
+            $this->info('Registrasi Berhasil!');
+            foreach ($desas as $desa) {
+                $client = new \GuzzleHttp\Client();
+                $this->info('Mendaftarkan akun di website '. $desa->nama);
+                $url_register = "http://" . $desa->url_desa . ".test" . "/" . "api/register";
+                $client->post($url_register, [
+                    'form_params' => [
+                        'name' => $name,
+                        'email' => $email,
+                        'password' => $password,
+                        'password_confirmation' => $password_confirm,
+                    ]
+                ]);
+                $this->info('Pendaftaran akun di server '.$desa->nama.' berhasil!');
+            }
+        } else {
+            $this->info('Form Login');
+            $email = $this->ask('Email');
+            $password = $this->secret('Password');
+        }
 
         $progressBar = $this->output->createProgressBar();
         $progressBar->start();
+        $this->info('Memulai Harvesting Data Periode ' . Carbon::now()->format('Y-m-d H:i:s'));
 
-        // Pemilih
-            $this->info('Harvesting API Pemilih');
-            $url = "http://127.0.0.1:8000/api/pemilih";
-            $response = $client->get($url, [
+        foreach ($desas as $desa) {
+            // Login
+            $client = new \GuzzleHttp\Client();
+            $url_login = "http://" . $desa->url_desa . ".test" . "/" . "api/login";
+            $response = $client->post($url_login, [
+                'form_params' => [
+                    'email' => $email,
+                    'password' => $password
+                ],
+            ]);
+            $object = json_decode($response->getBody()->getContents(), true);
+            $token = $object['token'];
+
+            $this->info('Harvesting Data ' . $desa->nama);
+            // Apis Harvesting
+            foreach ($apilists as $apilist) {
+                $this->info('Harvesting API ' . $apilist->nama);
+                $url = "http://" . $desa->url_desa . ".test" . "/" . "api/" . $apilist->path_api;
+                $this->info($url);
+
+                $response = $client->get($url, [
+                    'headers' => [
+                        'Accept' => 'application/json',
+                        'Content-Type' => 'application/json',
+                        'Authorization' => "Bearer {$token}"
+                    ]
+                ]);
+                $object = json_decode($response->getBody()->getContents(), true);
+                $data = $object['data'];
+
+                foreach ($data as $datum) {
+                    $datum = (array) $datum;
+                    if ($apilist->path_api == 'pemilih') {
+                        Pemilih::updateOrCreate(
+                            [
+                                'desa_id' => $datum['DesaID'],
+                                'dusun_id' => $datum['DusunID'],
+                                'dusun_name' => $datum['nama_dusun'],
+                                'rt' => $datum['RT'],
+                                'rw' => $datum['RW'],
+                                'Lk' => $datum['Lk'],
+                                'Pr' => $datum['Pr'],
+                                'Jiwa' => $datum['Jiwa'],
+                                'harvested_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                            ]
+                        );
+                    } elseif ($apilist->path_api == 'bloodtypes') {
+                        Bloodtype::updateOrCreate(
+                            [
+                                'desa_id' => $datum['DesaID'],
+                                'dusun_id' => $datum['DusunID'],
+                                'dusun_name' => $datum['nama_dusun'],
+                                'bloodtype_name' => $datum['BloodTypeName'],
+                                'Pria' => $datum['Pria'],
+                                'Wanita' => $datum['Wanita'],
+                                'Total' => $datum['Total'],
+                                'harvested_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                            ]
+                        );
+                    } elseif ($apilist->path_api == 'sex') {
+                        Sex::updateOrCreate(
+                            [
+                                'desa_id' => $datum['DesaID'],
+                                'dusun_id' => $datum['DusunID'],
+                                'dusun_name' => $datum['nama_dusun'],
+                                'jenis_kelamin_id' => $datum['id_jenis_kelamin'],
+                                'jenis_kelamin' => $datum['jenis_kelamin'],
+                                'total' => $datum['total'],
+                                'harvested_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                            ]
+                        );
+                    } elseif ($apilist->path_api == 'populations') {
+                        Population::updateOrCreate(
+                            [
+                                'desa_id' => $datum['DesaID'],
+                                'dusun_id' => $datum['DusunID'],
+                                'dusun_name' => $datum['nama_dusun'],
+                                'rt' => $datum['RT'],
+                                'rw' => $datum['RW'],
+                                'jumlah_kk' => $datum['Jumlah_KK'],
+                                'pria' => $datum['Pria'],
+                                'wanita' => $datum['Wanita'],
+                                'total_pw' => $datum['Total_PW'],
+                                'harvested_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                            ]
+                        );
+                    };
+                };
+            };
+            // logout
+            $url_logout = "http://" . $desa->url_desa . ".test" . "/" . "api/logout";
+            $response = $client->post($url_logout, [
                 'headers' => [
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
                     'Authorization' => "Bearer {$token}"
-                ]
-            ]);
-            $object = json_decode($response->getBody()->getContents(), true);
-            $data = $object['data'];
-            foreach($data as $datum)
-            {
-                $datum = (array) $datum;
-                Pemilih::updateOrCreate(
-                    [
-                        'desa_id' => $datum['DusunID'],
-                        'dusun_name' => $datum['DusunName'],
-                        'rt' => $datum['RT'],
-                        'rw' => $datum['RW'],
-                        'Lk' => $datum['Lk'],
-                        'Pr' => $datum['Pr'],
-                        'Jiwa' => $datum['Jiwa']
                     ]
-                );
-            };
+                ]);
+                $object = json_decode($response->getBody()->getContents(), true);
+                $this->info('Harvesting Data ' . $desa->nama . ' Completed !!');
             sleep(1);
             $progressBar->advance();
-
-        // BloodTypes
-            $this->info('Harvesting API Bloodtype');
-            $url = "http://127.0.0.1:8000/api/bloodtypes";
-            $response = $client->get($url, [
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Content-Type' => 'application/json',
-                    'Authorization' => "Bearer {$token}"
-                ]
-            ]);
-            $object = json_decode($response->getBody()->getContents(), true);
-            $data = $object['data'];
-            foreach($data as $datum)
-            {
-                $datum = (array) $datum;
-                Bloodtype::updateOrCreate(
-                    [
-                        'desa_id' => $datum['DusunID'],
-                        'bloodtype_name' => $datum['BloodTypeName'],
-                        'Pria' => $datum['Pria'],
-                        'Wanita' => $datum['Wanita'],
-                        'Total' => $datum['Total'],
-                    ]
-                );
-            };
-            sleep(1);
-            $progressBar->advance();
-
-        // Population
-            $this->info('Harvesting API Population');
-            $url = "http://127.0.0.1:8000/api/populations";
-            $response = $client->get($url, [
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Content-Type' => 'application/json',
-                    'Authorization' => "Bearer {$token}"
-                ]
-            ]);
-            $object = json_decode($response->getBody()->getContents(), true);
-            $data = $object['data'];
-            foreach($data as $datum)
-            {
-                $datum = (array) $datum;
-                Population::updateOrCreate(
-                    [
-                        'desa_id' => $datum['DusunID'],
-                        'rt' => $datum['RT'],
-                        'rw' => $datum['RW'],
-                        'jumlah_kk' => $datum['Jumlah_KK'],
-                        'pria' => $datum['Pria'],
-                        'wanita' => $datum['Wanita'],
-                        'total_pw' => $datum['Total_PW'],
-                        'dusun_name' => $datum['DusunName'],
-                    ]
-                );
-            };
-            sleep(1);
-            $progressBar->advance();
-
-        // Sex
-            $this->info('Harvesting API Sex');
-            $url = "http://127.0.0.1:8000/api/sex";
-            $response = $client->get($url, [
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Content-Type' => 'application/json',
-                    'Authorization' => "Bearer {$token}"
-                ]
-            ]);
-            $object = json_decode($response->getBody()->getContents(), true);
-            $data = $object['data'];
-            foreach($data as $datum)
-            {
-                $datum = (array) $datum;
-                Sex::updateOrCreate(
-                    [
-                        'desa_id' => $datum['DusunID'],
-                        'jenis_kelamin_id' => $datum['id_jenis_kelamin'],
-                        'jenis_kelamin' => $datum['jenis_kelamin'],
-                        'total' => $datum['total']
-                    ]
-                );
-            };
-            sleep(1);
-            $progressBar->advance();
-
-        // Desa
-            $this->info('Harvesting API Desa');
-            $url = "http://127.0.0.1:8000/api/dusuns";
-            $response = $client->get($url, [
-                'headers' => [
-                    'Accept' => 'application/json',
-                    'Content-Type' => 'application/json',
-                    'Authorization' => "Bearer {$token}"
-                ]
-            ]);
-            $object = json_decode($response->getBody()->getContents(), true);
-            $data = $object['data'];
-            foreach($data as $datum)
-            {
-                $datum = (array) $datum;
-                Desa::updateOrCreate(
-                    [
-                        'id' => $datum['id'],
-                        'nama' => $datum['name'],
-                        'kecamatan_id' => $datum['kecamatan_id'],
-                        'url_desa' => str_replace([' ', '.'], '-', strtolower($datum['name']))
-
-                    ]
-                );
-            };
-            sleep(1);
-            $progressBar->advance();
+        };
         $progressBar->finish();
-        $this->info('Harvesting Completed !!');
+        $this->info('All Data Harvested!!');
     }
 }

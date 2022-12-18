@@ -39,10 +39,16 @@
             <thead class="border-b bg-indigo-600">
                 <tr>
                     <th scope="col" class="text-md font-medium text-white px-6 py-4 text-left">
-                        #
+                        No
                     </th>
                     <th scope="col" class="text-md font-medium text-white px-6 py-4 text-left">
-                        Gologan Darah
+                        Tanggal
+                    </th>
+                    <th scope="col" class="text-md font-medium text-white px-6 py-4 text-left">
+                        Dusun
+                    </th>
+                    <th scope="col" class="text-md font-medium text-white px-6 py-4 text-left">
+                        Golongan Darah
                     </th>
                     <th scope="col" class="text-md font-medium text-white px-6 py-4 text-left">
                         Pria
@@ -60,6 +66,12 @@
                 <tr class="border-b bg-white">
                     <td class="text-md px-4 py-4 whitespace-nowrap">
                         {{ $loop->iteration }}
+                    </td>
+                    <td class="text-md px-4 py-4 whitespace-nowrap">
+                        {{ $bloodtype->harvested_at }}
+                    </td>
+                    <td class="text-md px-4 py-4 whitespace-nowrap">
+                        {{ $bloodtype->dusun_name }}
                     </td>
                     <td class="text-md px-4 py-4 whitespace-nowrap">
                         {{ $bloodtype->bloodtype_name }}

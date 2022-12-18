@@ -39,10 +39,13 @@
             <thead class="border-b bg-indigo-600">
                 <tr>
                     <th scope="col" class="text-md font-medium text-white px-6 py-4 text-left">
-                        #
+                        No
                     </th>
                     <th scope="col" class="text-md font-medium text-white px-6 py-4 text-left">
-                        ID Jenis Kelamin
+                        Tanggal
+                    </th>
+                    <th scope="col" class="text-md font-medium text-white px-6 py-4 text-left">
+                        Dusun
                     </th>
                     <th scope="col" class="text-md font-medium text-white px-6 py-4 text-left">
                         Jenis Kelamin
@@ -59,7 +62,10 @@
                         {{ $loop->iteration }}
                     </td>
                     <td class="text-md px-4 py-4 whitespace-nowrap">
-                        {{ $sex->jenis_kelamin_id }}
+                        {{ $sex->harvested_at }}
+                    </td>
+                    <td class="text-md px-4 py-4 whitespace-nowrap">
+                        {{ $sex->dusun_name }}
                     </td>
                     <td class="text-md px-4 py-4 whitespace-nowrap">
                         {{ $sex->jenis_kelamin }}

@@ -13,8 +13,8 @@ class PopulationController extends Controller
     {
         $populations = Population::where('desa_id', $desa->id)->get();
         $labels = collect(['Pria', 'Wanita']);
-        $data_pria = $populations->flatten(1)->pluck('pria');
-        $data_wanita = $populations->flatten(1)->pluck('wanita');
+        $data_pria = $populations->flatten(1)->pluck('pria')->sum();
+        $data_wanita = $populations->flatten(1)->pluck('wanita')->sum();
         $colors = $labels->map(function($item) {
             return $rand_color = '#' . substr(md5(mt_rand()), 0, 6);
         });

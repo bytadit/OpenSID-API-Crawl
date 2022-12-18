@@ -16,11 +16,14 @@ return new class extends Migration
         Schema::create('bloodtypes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('desa_id');
+            $table->foreignId('dusun_id');
+            $table->string('dusun_name');
             $table->string('bloodtype_name');
             $table->integer('Pria');
             $table->integer('Wanita');
             $table->integer('Total');
-            $table->timestamps();
+            $table->dateTime('harvested_at');
+            // $table->timestamps();
         });
     }
 

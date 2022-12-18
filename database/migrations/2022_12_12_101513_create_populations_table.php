@@ -16,14 +16,16 @@ return new class extends Migration
         Schema::create('populations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('desa_id');
+            $table->foreignId('dusun_id');
+            $table->string('dusun_name');
             $table->string('rt');
             $table->string('rw');
             $table->integer('jumlah_kk');
             $table->integer('pria');
             $table->integer('wanita');
             $table->integer('total_pw');
-            $table->string('dusun_name');
-            $table->timestamps();
+            $table->dateTime('harvested_at');
+            // $table->timestamps();
         });
     }
 

@@ -24,7 +24,9 @@ return new class extends Migration
             $table->integer('pria');
             $table->integer('wanita');
             $table->integer('total_pw');
+            $table->timestamp('created_at');
             $table->dateTime('harvested_at');
+            // $table->foreignId('user_id');
             // $table->timestamps();
         });
     }

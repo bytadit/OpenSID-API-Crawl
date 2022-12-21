@@ -39,17 +39,17 @@ class DatabaseSeeder extends Seeder
         }
 
          // Desa Seeder
-         $desas = ['Desa1', 'Desa2', 'Desa3', 'Desa4',
-                   'Desa5', 'Desa6', 'Desa7', 'Desa8',
-                   'Desa9', 'Desa10', 'Desa11', 'Desa12'
+        $nama_desa = ['Bumi', 'Gilingan', 'Mangkubumen', 'Keprabon',
+                   'Kadipiro', 'Nusukan', 'Sumber', 'Semanggi',
+                   'Mojosongo', 'Kauman', 'Gajahan', 'Tipes'
                   ];
         $init = 0;
          for ($i = 1; $i <= sizeof($kecamatans); $i++){
             for($j=$init; $j < $i*6; $j++){
                 Desa::create([
-                    'nama' => $desas[$j],
+                    'nama' => $nama_desa[$j],
                     'kecamatan_id' => $i,
-                    'url_desa' => strtolower($desas[$j])
+                    'url_desa' => strtolower($nama_desa[$j])
                 ]);
             }
             $init += 6;

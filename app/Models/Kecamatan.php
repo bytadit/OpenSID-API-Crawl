@@ -12,8 +12,4 @@ class Kecamatan extends Model
     public function desas(){
         return $this->hasMany(Desa::class);
     }
-    // public function getRouteKeyName()
-    // {
-    //     return 'nama';
-    // }
 }

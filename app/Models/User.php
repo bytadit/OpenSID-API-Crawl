@@ -39,4 +39,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // public function pemilihs(){
+    //     return $this->hasMany(Pemilih::class);
+    // }
+    // public function populations(){
+    //     return $this->hasMany(Population::class);
+    // }
+    // public function sexes(){
+    //     return $this->hasMany(Sex::class);
+    // }
+    // public function bloodtypes(){
+    //     return $this->hasMany(Bloodtype::class);
+    // }
 }

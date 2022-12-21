@@ -50,6 +50,5 @@ Route::get('harvest-apis', function () {
     Artisan::call('harvest:apis', [
         'token' => Session::get('token'),
     ]);
-    // return back();
     return redirect('/dashboard');
 })->middleware('auth');

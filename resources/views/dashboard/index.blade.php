@@ -22,9 +22,10 @@
     </div>
 </nav>
 <div class="rounded-md mt-4 mx-auto max-w-5xl flex gap-8 items-center">
-    <a class="w-auto rounded-md border border-transparent bg-emerald-600 py-2 px-4 text-sm font-medium text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 btn btn-success {{ $display }}" href="/harvest-apis">
+    {{-- <a class="w-auto rounded-md border border-transparent bg-emerald-600 py-2 px-4 text-sm font-medium text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 btn btn-success {{ $display }}" href="/harvest-apis">
         Ambil Data
-    </a>
+    </a> --}}
+    <strong>Selamat Datang {{ strtok(auth()->user()->name, ' ') }}</strong>
 </div>
 <div class="bg-white mt-4 flex flex-col max-w-5xl mx-auto h-96 overflow-x shadow-sm rounded-md bg-white">
     <div class="h-96 overflow-x-auto">

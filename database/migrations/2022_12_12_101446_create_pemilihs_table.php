@@ -23,7 +23,9 @@ return new class extends Migration
             $table->integer('Lk');
             $table->integer('Pr');
             $table->integer('Jiwa');
+            $table->timestamp('created_at');
             $table->dateTime('harvested_at');
+            // $table->foreignId('user_id');
             // $table->timestamps();
         });
     }

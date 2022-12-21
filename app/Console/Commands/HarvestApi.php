@@ -62,7 +62,7 @@ class HarvestApi extends Command
             $this->info('Registrasi Berhasil!');
             foreach ($desas as $desa) {
                 $client = new \GuzzleHttp\Client();
-                $this->info('Mendaftarkan akun di website '. $desa->nama);
+                $this->info('Mendaftarkan akun di server Desa '. $desa->nama);
                 $url_register = "http://" . $desa->url_desa . ".test" . "/" . "api/register";
                 $client->post($url_register, [
                     'form_params' => [
@@ -72,7 +72,7 @@ class HarvestApi extends Command
                         'password_confirmation' => $password_confirm,
                     ]
                 ]);
-                $this->info('Pendaftaran akun di server '.$desa->nama.' berhasil!');
+                $this->info('Pendaftaran akun di server Desa '.$desa->nama.' berhasil!');
             }
         } else {
             $this->info('Form Login');
@@ -97,12 +97,11 @@ class HarvestApi extends Command
             $object = json_decode($response->getBody()->getContents(), true);
             $token = $object['token'];
 
-            $this->info('Harvesting Data ' . $desa->nama);
+            $this->info('Harvesting Data Desa ' . $desa->nama);
             // Apis Harvesting
             foreach ($apilists as $apilist) {
                 $this->info('Harvesting API ' . $apilist->nama);
                 $url = "http://" . $desa->url_desa . ".test" . "/" . "api/" . $apilist->path_api;
-                $this->info($url);
 
                 $response = $client->get($url, [
                     'headers' => [
@@ -183,7 +182,7 @@ class HarvestApi extends Command
                     ]
                 ]);
                 $object = json_decode($response->getBody()->getContents(), true);
-                $this->info('Harvesting Data ' . $desa->nama . ' Completed !!');
+                $this->info('Harvesting Data Desa ' . $desa->nama . ' Completed !!');
             sleep(1);
             $progressBar->advance();
         };

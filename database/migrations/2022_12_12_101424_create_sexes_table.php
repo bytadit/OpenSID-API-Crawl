@@ -21,7 +21,9 @@ return new class extends Migration
             $table->string('jenis_kelamin_id');
             $table->string('jenis_kelamin');
             $table->integer('total');
+            $table->timestamp('created_at');
             $table->dateTime('harvested_at');
+            // $table->foreignId('user_id');
             // $table->timestamps();
         });
     }

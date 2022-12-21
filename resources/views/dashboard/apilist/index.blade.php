@@ -39,7 +39,7 @@
                         <div class="w-full p-1">
                             <div class="card bg-indigo-600">
                                 <div class="card-body">
-                                    <h3 class="text-xl font-medium text-white">DATA {{ strtoupper($apilist->path_api) }}</h3>
+                                    <h3 class="text-xl font-medium text-white">DATA {{ strtoupper($apilist->nama) }}</h3>
                                 </div>
                                 <div class="card-footer d-flex align-items-center justify-content-between hover:bg-indigo-700">
                                     <a class="text-sm text-white flex justify-between items-center w-full" href="/dashboard/kecamatans/{{ $kecamatan->url_kecamatan }}/desas/{{ $desa->url_desa }}/apilists/{{ $apilist->path_api }}">

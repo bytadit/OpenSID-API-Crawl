@@ -14,5 +14,9 @@ class Bloodtype extends Model
     {
         return $this->belongsTo(Desa::class);
     }
+    // public function user()
+    // {
+    //     return $this->belongsTo(User::class);
+    // }
     public $timestamps = false;
 }

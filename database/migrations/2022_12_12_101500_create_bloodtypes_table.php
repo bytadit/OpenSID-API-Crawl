@@ -22,7 +22,9 @@ return new class extends Migration
             $table->integer('Pria');
             $table->integer('Wanita');
             $table->integer('Total');
+            $table->timestamp('created_at');
             $table->dateTime('harvested_at');
+            // $table->foreignId('user_id');
             // $table->timestamps();
         });
     }

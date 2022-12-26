@@ -25,9 +25,9 @@
     <ol class="list-reset flex">
         <li><a href="/dashboard/kecamatans" class="text-blue-600 hover:text-blue-700">Kecamatan</a></li>
         <li><span class="text-gray-500 mx-2">/</span></li>
-        <li><a href="/dashboard/kecamatans/{{ $kecamatan->url_kecamatan }}/desas" class="text-blue-600 hover:text-blue-700">Kec. {{ $desa->kecamatan->nama }}</a></li>
+        <li><a href="/dashboard/kecamatans/{{ $kecamatan->slug_kecamatan }}/desas" class="text-blue-600 hover:text-blue-700">Kec. {{ $desa->kecamatan->nama }}</a></li>
         <li><span class="text-gray-500 mx-2">/</span></li>
-        <li><a href="/dashboard/kecamatans/{{ $kecamatan->url_kecamatan }}/desas/{{ $desa->url_desa }}/apilists" class="text-blue-600 hover:text-blue-700">Desa {{ $desa->nama }}</a></li>
+        <li><a href="/dashboard/kecamatans/{{ $kecamatan->slug_kecamatan }}/desas/{{ $desa->slug_desa }}/apilists" class="text-blue-600 hover:text-blue-700">Desa {{ $desa->nama }}</a></li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li class="text-gray-500">Data Populasi</li>
     </ol>

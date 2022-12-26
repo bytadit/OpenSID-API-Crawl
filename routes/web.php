@@ -39,12 +39,12 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout')->midd
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
 Route::get('/dashboard/kecamatans', [KecamatanController::class, 'index'])->middleware('auth');
-Route::get('/dashboard/kecamatans/{kecamatan:url_kecamatan}/desas', [DesaController::class, 'index'])->middleware('auth');
-Route::get('/dashboard/kecamatans/{kecamatan:url_kecamatan}/desas/{desa:url_desa}/apilists', [ApilistController::class, 'index'])->middleware('auth');
-Route::get('/dashboard/kecamatans/{kecamatan:url_kecamatan}/desas/{desa:url_desa}/apilists/bloodtypes', [BloodtypesController::class, 'index'])->middleware('auth');
-Route::get('/dashboard/kecamatans/{kecamatan:url_kecamatan}/desas/{desa:url_desa}/apilists/pemilih', [PemilihController::class, 'index'])->middleware('auth');
-Route::get('/dashboard/kecamatans/{kecamatan:url_kecamatan}/desas/{desa:url_desa}/apilists/sex', [SexController::class, 'index'])->middleware('auth');
-Route::get('/dashboard/kecamatans/{kecamatan:url_kecamatan}/desas/{desa:url_desa}/apilists/populations', [PopulationController::class, 'index'])->middleware('auth');
+Route::get('/dashboard/kecamatans/{kecamatan:slug_kecamatan}/desas', [DesaController::class, 'index'])->middleware('auth');
+Route::get('/dashboard/kecamatans/{kecamatan:slug_kecamatan}/desas/{desa:slug_desa}/apilists', [ApilistController::class, 'index'])->middleware('auth');
+Route::get('/dashboard/kecamatans/{kecamatan:slug_kecamatan}/desas/{desa:slug_desa}/apilists/bloodtypes', [BloodtypesController::class, 'index'])->middleware('auth');
+Route::get('/dashboard/kecamatans/{kecamatan:slug_kecamatan}/desas/{desa:slug_desa}/apilists/pemilih', [PemilihController::class, 'index'])->middleware('auth');
+Route::get('/dashboard/kecamatans/{kecamatan:slug_kecamatan}/desas/{desa:slug_desa}/apilists/sex', [SexController::class, 'index'])->middleware('auth');
+Route::get('/dashboard/kecamatans/{kecamatan:slug_kecamatan}/desas/{desa:slug_desa}/apilists/populations', [PopulationController::class, 'index'])->middleware('auth');
 
 Route::get('harvest-apis', function () {
     Artisan::call('harvest:apis', [

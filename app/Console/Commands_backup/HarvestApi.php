@@ -42,37 +42,27 @@ class HarvestApi extends Command
         $desas = Desa::all();
         $apilists = Apilist::all();
 
-        $name = config('apiAccount.name');
-        $email = config('apiAccount.email');
-        $password = config('apiAccount.password');
-        $password_confirm = config('apiAccount.password_confirm');
+        $defaultIndex = 'Belum';
+        $akun = $this->choice(
+            'Apakah sudah punya akun?',
+            ['Sudah', 'Belum'],
+            $defaultIndex
+        );
 
-        $progressBar = $this->output->createProgressBar();
-        $progressBar->start();
-        $this->info('Memulai Harvesting Data Periode ' . Carbon::now()->format('Y-m-d H:i:s'));
-
-        foreach ($desas as $desa) {
-            try {
-                // Login
-                $this->info('Login akun di server Desa '. $desa->nama);
-                $client = new \GuzzleHttp\Client();
-                $url_login = $desa->url_desa . "api/login";
-                $response = $client->post($url_login, [
-                    'form_params' => [
-                        'email' => $email,
-                        'password' => $password
-                    ],
-                ]);
-                $object = json_decode($response->getBody()->getContents(), true);
-                $token = $object['token'];
+        if ($akun == $defaultIndex) {
+            $this->info('Form Registrasi');
+            $name = $this->ask('Nama');
+            $email = $this->ask('Email');
+            $password = $this->secret('Password');
+            $password_confirm = $this->secret('Konfirmasi Password');
+            while ($password_confirm != $password) {
+                $this->error('Konfirmasi Password tidak cocok!');
+                $password_confirm = $this->secret('Konfirmasi Password');
             }
-            catch (\GuzzleHttp\Exception\ClientException $e) {
-                $response = $e->getResponse();
-                $responseBodyAsString = $response->getBody()->getContents();
-                $this->info('Akun tidak terdaftar di server Desa ' . $desa->nama . ' !!');
-                // Register
-                $this->info('Mendaftarkan akun di server Desa '. $desa->nama);
+            $this->info('Registrasi Berhasil!');
+            foreach ($desas as $desa) {
                 $client = new \GuzzleHttp\Client();
+                $this->info('Mendaftarkan akun di server Desa '. $desa->nama);
                 $url_register = $desa->url_desa . "api/register";
                 $client->post($url_register, [
                     'form_params' => [
@@ -83,20 +73,29 @@ class HarvestApi extends Command
                     ]
                 ]);
                 $this->info('Pendaftaran akun di server Desa '.$desa->nama.' berhasil!');
-
-                // Login
-                $this->info('Login akun di server Desa '. $desa->nama);
-                $client = new \GuzzleHttp\Client();
-                $url_login = $desa->url_desa . "api/login";
-                $response = $client->post($url_login, [
-                    'form_params' => [
-                        'email' => $email,
-                        'password' => $password
-                    ],
-                ]);
-                $object = json_decode($response->getBody()->getContents(), true);
-                $token = $object['token'];
             }
+        } else {
+            $this->info('Form Login');
+            $email = $this->ask('Email');
+            $password = $this->secret('Password');
+        }
+
+        $progressBar = $this->output->createProgressBar();
+        $progressBar->start();
+        $this->info('Memulai Harvesting Data Periode ' . Carbon::now()->format('Y-m-d H:i:s'));
+
+        foreach ($desas as $desa) {
+            // Login
+            $client = new \GuzzleHttp\Client();
+            $url_login = $desa->url_desa . "api/login";
+            $response = $client->post($url_login, [
+                'form_params' => [
+                    'email' => $email,
+                    'password' => $password
+                ],
+            ]);
+            $object = json_decode($response->getBody()->getContents(), true);
+            $token = $object['token'];
 
             $this->info('Harvesting Data Desa ' . $desa->nama);
             // Apis Harvesting
@@ -183,11 +182,11 @@ class HarvestApi extends Command
                     ]
                 ]);
                 $object = json_decode($response->getBody()->getContents(), true);
-                $this->info('Harvesting Data Desa ' . $desa->nama . ' Selesai !!');
+                $this->info('Harvesting Data Desa ' . $desa->nama . ' Completed !!');
             sleep(1);
             $progressBar->advance();
         };
         $progressBar->finish();
-        $this->info('Semua Data telah ter-Harvest!!');
+        $this->info('All Data Harvested!!');
     }
 }

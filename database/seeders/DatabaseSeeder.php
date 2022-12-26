@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
         for ($i = 0; $i < sizeof($kecamatans); $i++){
             Kecamatan::create([
                 'nama' => $kecamatans[$i],
-                'url_kecamatan' => strtolower($kecamatans[$i])
+                'slug_kecamatan' => strtolower($kecamatans[$i])
             ]);
         }
 
@@ -49,7 +49,8 @@ class DatabaseSeeder extends Seeder
                 Desa::create([
                     'nama' => $nama_desa[$j],
                     'kecamatan_id' => $i,
-                    'url_desa' => strtolower($nama_desa[$j])
+                    'url_desa' => 'http://'. strtolower($nama_desa[$j]) . '.test/',
+                    'slug_desa' => strtolower($nama_desa[$j]),
                 ]);
             }
             $init += 6;

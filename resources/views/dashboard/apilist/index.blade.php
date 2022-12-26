@@ -24,7 +24,7 @@
     <ol class="list-reset flex">
         <li><a href="/dashboard/kecamatans" class="text-blue-600 hover:text-blue-700">Kecamatan</a></li>
         <li><span class="text-gray-500 mx-2">/</span></li>
-        <li><a href="/dashboard/kecamatans/{{ $kecamatan->url_kecamatan }}/desas" class="text-blue-600 hover:text-blue-700">Kec. {{ $kecamatan->nama }}</a></li>
+        <li><a href="/dashboard/kecamatans/{{ $kecamatan->slug_kecamatan }}/desas" class="text-blue-600 hover:text-blue-700">Kec. {{ $kecamatan->nama }}</a></li>
         <li><span class="text-gray-500 mx-2">/</span></li>
         <li class="text-gray-500">Desa {{ $desa->nama }}</li>
     </ol>
@@ -42,7 +42,7 @@
                                     <h3 class="text-xl font-medium text-white">DATA {{ strtoupper($apilist->nama) }}</h3>
                                 </div>
                                 <div class="card-footer d-flex align-items-center justify-content-between hover:bg-indigo-700">
-                                    <a class="text-sm text-white flex justify-between items-center w-full" href="/dashboard/kecamatans/{{ $kecamatan->url_kecamatan }}/desas/{{ $desa->url_desa }}/apilists/{{ $apilist->path_api }}">
+                                    <a class="text-sm text-white flex justify-between items-center w-full" href="/dashboard/kecamatans/{{ $kecamatan->slug_kecamatan }}/desas/{{ $desa->slug_desa }}/apilists/{{ $apilist->path_api }}">
                                         Lihat Detail
                                         <div><i class="fas fa-angle-right"></i></div>
                                     </a>

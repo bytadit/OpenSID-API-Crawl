@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('kecamatans', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('url_kecamatan');
+            $table->string('slug_kecamatan');
             $table->timestamps();
         });
     }

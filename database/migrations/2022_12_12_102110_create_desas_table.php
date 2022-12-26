@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama');
             $table->foreignId('kecamatan_id');
             $table->string('url_desa');
+            $table->string('slug_desa');
             $table->timestamps();
         });
     }

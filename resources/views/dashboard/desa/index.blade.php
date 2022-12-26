@@ -41,7 +41,7 @@
                                     <h3 class="text-xl font-medium text-white">Desa {{ $desa->nama }}</h3>
                                 </div>
                                 <div class="card-footer d-flex align-items-center justify-content-between hover:bg-indigo-700">
-                                    <a class="text-sm text-white flex justify-between items-center w-full" href="/dashboard/kecamatans/{{ $kecamatan->url_kecamatan }}/desas/{{ $desa->url_desa }}/apilists">
+                                    <a class="text-sm text-white flex justify-between items-center w-full" href="/dashboard/kecamatans/{{ $kecamatan->slug_kecamatan }}/desas/{{ $desa->slug_desa }}/apilists">
                                         Lihat Detail
                                         <div><i class="fas fa-angle-right"></i></div>
                                     </a>

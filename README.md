@@ -1,66 +1,38 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+### Project 2 : API Harvester
+#### How to Install:
+1. Install Requirement :
+    * XAMPP
+    * Composer (https://getcomposer.org/)
+    * Valet (for windows : https://github.com/cretueusebiu/valet-windows)
+    * Code Editor
+    * Browser
+    * Git
+    * Postman/SOAP UI
+2. Siapkan 2 Folder / Direktori untuk Project 1 (API Servers) dan Project 2 (API Harvester)
+3. Menyiapkan API Servers 
+    * Jalankan XAMPP
+    * Clone Repository Project 1 ke direktori yang disiapkan (https://github.com/bytadit/Sister-Project-1)
+    * Terdapat 12 Server Desa, dalam tiap direktori folder desa, instal composer (`composer install` dan `composer update`)
+    * Buat 12 Database desa, masing" untuk tiap server desa
+    * Dalam masing" folder server/aplikasi desa, Buat file .env dengan meng-copy file .env.example dari masing" folder server desa. Sesuaikan konfigurasinya dengan kebutuhan masing-masing (nama database, baseurl, dll).
+    * Jalankan  `php artisan secret:key` dan `php artisan jwt:secret` untuk masing" server desa
+    * Pada tiap server desa, jalankan `php artisan migrate:fresh --seed` untuk membuat table dalam masing" database
+    * Pada direktori/folder utama yang berisi kumpulan folder server desa, install dan jalankan valet, kemudian jalankan `valet park`
+    * Untuk mengetest apakah server berjalan, buka postman, masukkan URL ( `http://{isi_nama_server_desa}.test/api/register, pada body masukkan nama, email, password dan password_confirmatiion, kemudian run dengan method post. Jika registrasi muncul pesan berhasil (200), maka server telah berjalan
+4. Menyiapkan Aplikasi Harvester
+    * Clone Repository ini (https://github.com/bytadit/OpenSID-API-Crawl/), di folder direktori yang telah disiapkan untuk project 2
+    * Jalankan `composer install` dan `composer update`
+    * Buat satu database baru, sebagai wadah untuk harvesting API
+    * Buat file dengan nama .env dengan meng-copy file .env.example, lalu merenamenya, sesuaikan konfigurasi didalamnya (nama database, variable NAMA, EMAIL, dan PASSWORD yang digunakan sebagai akun untuk mengakses API)
+    * Jalankan `php artisan migrate:fresh --seed`
+    * Jalankan server `php artisan serve`, copy urlnya
+    * Masuk dalam browser, lalu pastekan url server dari aplikasi harvester
+    * Registrasi akun baru, dengan klik register
+    * Jika registrasi berhasil, maka silakan login
+    * Akan muncul UI yang berisi navigasi untuk melihat daftar API dari tiap server desa dalam bentuk grafik, namun data API belum bisa ditampilkan karena data belum diharvest
+    * Untuk harvesting API, maka dalam console di aplikasi harvester, jalankan `php artisan harvest:apis`, yang merupakan command untuk melakukan harvesting. Harvesting dilakukan dengan mengecek akun yang telah diset dalam file .env, jika akun tersedia dalam database maka proses harvesting akan langsung dijalankan untuk tiap server desa. Jika akun belum tersedia, maka akan dilakukan registrasi akun baru sesuai informasi (NAMA, EMAIL, dan PASSWORD) yang anda definisikan di file .env
+    * Dalam proses harvesting, pada console akan muncul log proses yang berjalan. Jika harvesting berhasil maka akan muncul pesan kesuksesan
+    * Jika data telah sukses diharvest, maka sekarang tiap grafik statistik API dari tiap server desa akan muncul, sesuai dengan periode harvesting
+5. Selesai
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
-
-## About Laravel
-
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
-
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
-
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
-
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-## Laravel Sponsors
-
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    
